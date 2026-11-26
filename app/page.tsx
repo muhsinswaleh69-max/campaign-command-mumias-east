@@ -30,7 +30,6 @@ export default function Page() {
     { id: 2, captain: "Kevin Wanjala", centre: "MALAHA PRI", contacted: 300, confirmed: 210 },
   ]);
 
-  // Forms
   const [cName, setCName] = useState(""); const [cPhone, setCPhone] = useState(""); const [cWard, setCWard] = useState(WARDS[0]); const [cCentre, setCCentre] = useState(CENTRES[WARDS[0]][0]);
   const [aTitle, setATitle] = useState(""); const [aWard, setAWard] = useState(WARDS[0]); const [aDate, setADate] = useState("2026-11-28"); const [aPeople, setAPeople] = useState(20);
   const [rCaptain, setRCaptain] = useState("Wycliffe Barasa"); const [rCentre, setRCentre] = useState("LUBINU PRIMARY"); const [rContacted, setRContacted] = useState(50); const [rConfirmed, setRConfirmed] = useState(30);
@@ -53,18 +52,19 @@ export default function Page() {
   const input: any = { width: "100%", padding: 12, borderRadius: 12, border: "1px solid #e2e8f0", marginTop: 6, boxSizing: "border-box" as any };
   const btnGreen: any = { background: "#16a34a", color: "#fff", border: "none", padding: "12px 16px", borderRadius: 12, fontWeight: 800, cursor: "pointer" };
   const btnRed: any = { background: "#fee2e2", color: "#dc2626", border: "none", padding: "6px 12px", borderRadius: 20, fontWeight: 800, cursor: "pointer", fontSize: 12 };
-
   const del = (list: any, set: any, id: number) => { if (confirm("Delete this? This cannot be undone.")) set(list.filter((x: any) => x.id !== id)); };
 
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc", fontFamily: "system-ui", paddingBottom: 60 }}>
       <div style={{ background: "#0f172a", color: "#fff", padding: 16, textAlign: "center" }}>
         <div style={{ fontWeight: 900, fontSize: 22 }}>🎯 CAMPAIGN COMMAND</div>
-        <div style={{ fontSize: 12, opacity: 0.7 }}>Mumias East • UDA • 2027 • Add / Delete Live</div>
+        <div style={{ fontSize: 16, fontWeight: 800, color: "#facc15", marginTop: 4 }}>Hon. BENJAMIN NJOMO WASHIALI</div>
+        <div style={{ fontSize: 12, opacity: 0.7 }}>Mumias East • UDA • MP 2027 • Vote Washiali</div>
       </div>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: 16 }}>
         <div style={{ background: "linear-gradient(135deg,#0f172a,#16a34a)", color: "#fff", borderRadius: 20, padding: 24, textAlign: "center" }}>
-          <div style={{ fontSize: 42, fontWeight: 900 }}>{totalConfirmed} Confirmed Votes</div>
+          <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: 1, opacity: 0.9 }}>FOR BENJAMIN NJOMO WASHIALI — MUMIAS EAST</div>
+          <div style={{ fontSize: 42, fontWeight: 900, marginTop: 6 }}>{totalConfirmed} Confirmed Votes</div>
           <div>{totalContacted.toLocaleString()} contacted • {captains.length} Captains • {activities.length} Activities</div>
           <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 14, flexWrap: "wrap" }}>
             <button onClick={() => setShow(show === "captain" ? "" : "captain")} style={btnGreen}>+ Add Captain</button>
@@ -75,10 +75,10 @@ export default function Page() {
 
         {show === "captain" && (
           <div style={{ background: "#fff", borderRadius: 16, padding: 16, marginTop: 12 }}>
-            <b>Sign Up New Captain</b>
+            <b>Sign Up New Captain for Washiali</b>
             <input style={input} placeholder="Full name e.g. Mary Nekesa" value={cName} onChange={(e) => setCName(e.target.value)} />
             <input style={input} placeholder="Phone e.g. 0712345678" value={cPhone} onChange={(e) => setCPhone(e.target.value)} />
-            <select style={input} value={cWard} onChange={(e) => { setCWard(e.target.value); setCCentre(CENTRES[e.target.value][0]); }}><option value="">Select Ward</option>{WARDS.map((w) => <option key={w}>{w}</option>)}</select>
+            <select style={input} value={cWard} onChange={(e) => { setCWard(e.target.value); setCCentre(CENTRES[e.target.value][0]); }}>{WARDS.map((w) => <option key={w}>{w}</option>)}</select>
             <select style={input} value={cCentre} onChange={(e) => setCCentre(e.target.value)}>{CENTRES[cWard].map((c: string) => <option key={c}>{c}</option>)}</select>
             <button style={{ ...btnGreen, width: "100%", marginTop: 12 }} onClick={() => { if (!cName) return alert("Enter name"); setCaptains([...captains, { id: Date.now(), name: cName, phone: cPhone, ward: cWard, centre: cCentre, confirmed: 0 }]); setCName(""); setCPhone(""); setShow(""); }}>✅ Save Captain</button>
           </div>
@@ -95,11 +95,11 @@ export default function Page() {
         )}
         {show === "report" && (
           <div style={{ background: "#fff", borderRadius: 16, padding: 16, marginTop: 12 }}>
-            <b>Add Voter Report (Individual Voter Batch)</b>
+            <b>Add Voter Report</b>
             <select style={input} value={rCaptain} onChange={(e) => setRCaptain(e.target.value)}>{captains.map((c) => <option key={c.id}>{c.name}</option>)}</select>
             <input style={input} placeholder="Polling centre" value={rCentre} onChange={(e) => setRCentre(e.target.value)} />
             <input style={input} type="number" placeholder="Contacted" value={rContacted} onChange={(e) => setRContacted(Number(e.target.value))} />
-            <input style={input} type="number" placeholder="Confirmed YES" value={rConfirmed} onChange={(e) => setRConfirmed(Number(e.target.value))} />
+            <input style={input} type="number" placeholder="Confirmed YES for Washiali" value={rConfirmed} onChange={(e) => setRConfirmed(Number(e.target.value))} />
             <button style={{ ...btnGreen, width: "100%", marginTop: 12, background: "#facc15", color: "#111" }} onClick={() => { setReports([...reports, { id: Date.now(), captain: rCaptain, centre: rCentre, contacted: rContacted, confirmed: rConfirmed }]); setShow(""); }}>✅ Save Report</button>
           </div>
         )}
@@ -112,7 +112,7 @@ export default function Page() {
 
         {tab === "Captains" && captains.map((c) => (
           <div key={c.id} style={{ background: "#fff", borderRadius: 16, padding: 16, marginTop: 10, display: "flex", justifyContent: "space-between" }}>
-            <div><b>{c.name}</b><div style={{ fontSize: 12, color: "#64748b" }}>{c.ward} • {c.centre} • {c.phone}</div><div style={{ marginTop: 6 }}>✅ {c.confirmed} confirmed</div></div>
+            <div><b>{c.name}</b><div style={{ fontSize: 12, color: "#64748b" }}>{c.ward} • {c.centre} • {c.phone}</div><div style={{ marginTop: 6 }}>✅ {c.confirmed} confirmed for Washiali</div></div>
             <button style={btnRed} onClick={() => del(captains, setCaptains, c.id)}>🗑 Delete</button>
           </div>
         ))}
@@ -130,8 +130,8 @@ export default function Page() {
         ))}
         {tab === "Dashboard" && (
           <div>
-            <div style={{ background: "#fff", borderRadius: 16, padding: 16 }}><b>How to use tomorrow:</b><div style={{ marginTop: 8, fontSize: 14, lineHeight: 1.6 }}>1. Click <b>+ Add Captain</b> → sign up captain on the spot, with phone + ward + centre<br />2. Click <b>+ Add Activity</b> → log baraza / door-to-door<br />3. Click <b>+ Add Voter Report</b> → captain reports how many contacted / YES<br />4. To remove a wrong entry, go to Captains / Activities / Reports tab → <b>🗑 Delete</b> → Confirm<br />All data saves in this browser automatically.</div></div>
-            <div style={{ background: "#fff", borderRadius: 16, padding: 16, marginTop: 12 }}><b>Latest Reports</b>{reports.slice(-3).map((r) => <div key={r.id} style={{ marginTop: 8 }}>✅ {r.confirmed} YES from {r.centre} by {r.captain}</div>)}</div>
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16 }}><b>How to use for Hon. Benjamin Njomo Washiali:</b><div style={{ marginTop: 8, fontSize: 14, lineHeight: 1.6 }}>1. Click <b>+ Add Captain</b> → sign up captain on the spot<br />2. Click <b>+ Add Activity</b> → log baraza / door-to-door<br />3. Click <b>+ Add Voter Report</b> → captain reports contacted / YES<br />4. To remove, go to Captains / Activities / Reports → <b>🗑 Delete</b> → Confirm<br />All data saves in this browser automatically.</div></div>
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, marginTop: 12 }}><b>Latest Reports for Washiali</b>{reports.slice(-3).map((r) => <div key={r.id} style={{ marginTop: 8 }}>✅ {r.confirmed} YES from {r.centre} by {r.captain}</div>)}</div>
           </div>
         )}
       </div>
